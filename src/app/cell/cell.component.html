@@ -1,9 +1,15 @@
 <table>
     <tbody>
         <tr *ngFor="let element of rows">
-            {{element.r}}
             <td *ngFor="let cell of element.row">
-                {{cell.Id}}
+                <div  *ngIf="(cell.Value__c | json) != '{}'" (click)="toggle(cell)" >
+                    {{cell.Value__c}}
+                </div>
+            </td>
+            <td *ngFor="let cell of element.row" hidden="true">
+                <div *ngIf="(cell.Value__c | json) === '{}'">
+                    <input type="number" [(ngModel)]="cell.Value__c" >
+                </div> 
             </td>
         </tr>
     </tbody>

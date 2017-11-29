@@ -9,6 +9,7 @@ import { Row } from './rows';
 @Component({
     selector: `app-cell`,
     templateUrl: './cell.component.html',
+    styleUrls: ['./cell.component.css'],
     providers: [CellService]
 })
 
@@ -16,6 +17,7 @@ export class CellComponent implements OnInit {
     private cells: Cell[];
     private table: Table;
     private rows: Array<Row>;
+    private editCell: Cell;
 
     constructor(private _cellService: CellService, private _dataService: TableService) {
         this._cellService = _cellService;
@@ -60,9 +62,14 @@ export class CellComponent implements OnInit {
         });
     }
 
+    public toggle(eCell: Cell) {
+        // eCell.Value__c = 
+    }
+
     ngOnInit() {
         this.getCells();
         this.getTable();
         this.safeBuildRows();
     }
+
 }

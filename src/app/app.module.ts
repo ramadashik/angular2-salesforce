@@ -9,6 +9,7 @@ import { TableService } from './table/table.service';
 import { TableComponent } from './table/table.component';
 import { CellService } from './cell/cell.service';
 import { CellComponent } from './cell/cell.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CellComponent } from './cell/cell.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    CommonModule
   ],
   providers: [ TableService, CellService ],
   bootstrap: [ AppComponent ]

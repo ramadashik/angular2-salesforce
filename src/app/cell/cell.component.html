@@ -1,7 +1,10 @@
-<table id="myTable" class="table">
+<table>
     <tbody>
-        <tr *ngFor="let cell of cells">
-            {{cell.Id}}
+        <tr *ngFor="let element of rows">
+            {{element.r}}
+            <td *ngFor="let cell of element.row">
+                {{cell.Id}}
+            </td>
         </tr>
     </tbody>
 </table>

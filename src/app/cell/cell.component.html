@@ -1,16 +1,31 @@
-<table>
-    <tbody>
-        <tr *ngFor="let element of rows">
-            <td *ngFor="let cell of element.row">
-                <div  *ngIf="(cell.Value__c | json) != '{}'" (click)="toggle(cell)" >
-                    {{cell.Value__c}}
-                </div>
-            </td>
-            <td *ngFor="let cell of element.row" hidden="true">
-                <div *ngIf="(cell.Value__c | json) === '{}'">
-                    <input type="number" [(ngModel)]="cell.Value__c" >
-                </div> 
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="flex">
+    <table>
+        <tbody>
+            <tr *ngFor="let element of rows">
+                <td *ngFor="let cell of element.row" (click)="toggle(cell)" [ngClass]="{'maxCol': sumRow == cell.RowCoord__c, 'maxRow': sumCol == cell.ColumnCoord__c}">
+                    <div *ngIf="cell.Id !== editCell.Id" >
+                        {{cell.Value__c}}
+                    </div>
+                    <div *ngIf="cell.Id == editCell.Id && cell.Value__c !== null" >
+                        <input type="number" [(ngModel)]="cell.Value__c" (ngModelChange)="saveValue($event, cell)" autofocus>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="qwer" (click)="addColumn()">
+        +
+    </div>
+</div>
+
+<div class="qwer" (click)="addRow()">
+    +
+</div>
+<div class="flex">
+    {{sum}}
+</div>
+
+
+
+
+

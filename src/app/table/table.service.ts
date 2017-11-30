@@ -11,14 +11,13 @@ export class TableService {
      constructor() {}
 
     private callRemote(methodName, params, resolve, reject) {
-        //console.log(params);
+        // console.log(params);
         Visualforce.remoting.Manager.invokeAction(
             methodName,
             ...params,
             function (result, event) {
-            //console.log({ event });
-            //console.log({ result });
-        
+            // console.log({ event });
+            // console.log({ result });
             if (event.status) {
                 resolve(result);
             }
@@ -31,7 +30,7 @@ export class TableService {
 
     getTable(): Promise<Table> {
         return new Promise((resolve, reject) => {
-            this.callRemote('JSTaskController.getTable', [], resolve, reject)
+            this.callRemote('JSTaskController.getTable', [], resolve, reject);
           });
     }
 }

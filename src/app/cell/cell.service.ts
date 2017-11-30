@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Cell } from './cell';
+import { Row } from './rows';
+import { Table } from '../table/table';
+// import { resolve } from 'path';
+// import { reject } from 'q';
 
 declare class Visualforce {
     static remoting: { Manager: { invokeAction: any } };
@@ -32,5 +36,29 @@ export class CellService {
         return new Promise((resolve, reject) => {
             this.callRemote('JSTaskController.getCells', [], resolve, reject);
           });
+    }
+
+    updateCellBack(newCell: Cell): Promise<{}> {
+        console.log('getContact called');
+        return new Promise((resolve, reject) => {
+            this.callRemote('JSTaskController.updateCell',
+            [newCell.Id, newCell.Value__c], resolve, reject);
+        });
+    }
+
+    insertNewRow(newRow: Row, table: Table): Promise<{}> {
+        console.log('insertNewRow called');
+        return new Promise((resolve, reject) => {
+            this.callRemote('JSTaskController.insertNewRow',
+            [newRow.row, table], resolve, reject);
+        });
+    }
+
+    insertNewColumn(newColumn: Row, table: Table): Promise<{}> {
+        console.log('insertNewRow called');
+        return new Promise((resolve, reject) => {
+            this.callRemote('JSTaskController.insertNewRow',
+            [newColumn.row, table], resolve, reject);
+        });
     }
 }

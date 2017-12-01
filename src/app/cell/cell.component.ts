@@ -29,6 +29,8 @@ export class CellComponent implements OnInit {
         this.editCell.Id = '0';
     }
 
+
+
     public getCells() {
         this._cellService.getCells()
         .then((cells) => this.cells = cells );
@@ -82,11 +84,12 @@ export class CellComponent implements OnInit {
                 this.editCell.Id = '0';
             }
         }
+
     }
 
     ngOnInit() {
-        this.getCells();
         this.getTable();
+        this.getCells();
         this.safeBuildRows();
     }
 
@@ -136,9 +139,9 @@ export class CellComponent implements OnInit {
         this.sumCol = 0;
         let maxVal = 0;
         let temp = 0;
-        for (let i = 0; i < this.cells.length; i += this.table.ColumnCount__c) {
+        for (let i = 0; i < this.table.ColumnCount__c; i++) {
             for (let j = 0; j < this.table.RowCount__c; j++) {
-                if (cells[i].Value__c) {
+                if (cells[j].Value__c) {
                     temp += cells[i].Value__c;
                 }
             }
@@ -153,17 +156,18 @@ export class CellComponent implements OnInit {
         this.sumRow = 0;
         let maxVal = 0;
         let temp = 0;
-        for (let i = 0; i < this.cells.length; i += this.table.RowCount__c) {
+        for (let i = 0; i < this.table.RowCount__c; i++) {
             for (let j = 0; j < this.table.ColumnCount__c; j++) {
-                if (cells[i].Value__c) {
+                if (cells[j].Value__c) {
                     temp += cells[i].Value__c;
-                    if (temp > maxVal) {
-                        maxVal = temp;
-                        this.sumRow = cells[i].RowCoord__c;
-                    }
                 }
+            }
+            if (temp > maxVal) {
+                maxVal = temp;
+                this.sumRow = cells[i].RowCoord__c;
             }
         }
     }
+
 
 }

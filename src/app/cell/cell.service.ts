@@ -55,9 +55,9 @@ export class CellService {
     }
 
     insertNewColumn(newColumn: Row, table: Table): Promise<{}> {
-        console.log('insertNewRow called');
+        console.log('insertNewColumn called');
         return new Promise((resolve, reject) => {
-            this.callRemote('JSTaskController.insertNewRow',
+            this.callRemote('JSTaskController.insertNewColumn',
             [newColumn.row, table], resolve, reject);
         });
     }

@@ -14,6 +14,7 @@ import { Row } from './rows';
 })
 
 export class CellComponent implements OnInit {
+    // @Input() myVal: number;
     private cells: Cell[];
     private table: Table;
     private rows: Array<Row>;
@@ -33,7 +34,9 @@ export class CellComponent implements OnInit {
 
     public getCells() {
         this._cellService.getCells()
-        .then((cells) => this.cells = cells );
+        .then((cells) => {
+            this.cells = cells;
+        }  );
     }
 
     public getTable() {
@@ -53,7 +56,6 @@ export class CellComponent implements OnInit {
                 j++;
             }
         }
-        console.log(tempRows);
         return tempRows;
     }
 
@@ -63,9 +65,9 @@ export class CellComponent implements OnInit {
             this._dataService.getTable()
             .then((table) => {
                 this.rows = this.buildRows(cells, table);
+                this.getSummRow(this.rows);
                 this.getSumm(cells);
-                this.getSummCol(cells);
-                this.getSummRow(cells);
+                this.getSummCol(this.rows);
              });
         });
     }
@@ -75,6 +77,9 @@ export class CellComponent implements OnInit {
         console.log(this.editCell);
     }
 
+    // ngOnChanges(changes: SimpleChange) {
+
+    // }
     public saveValue(newValue: number, eCell: Cell) {
         for (let i = 0; i < this.cells.length; i++) {
             if (this.cells[i].Id === eCell.Id) {
@@ -94,9 +99,9 @@ export class CellComponent implements OnInit {
     }
 
     public addRow() {
-        this.table.RowCount__c++;
         const colNum = this.table.ColumnCount__c;
         const rowNum = this.table.RowCount__c;
+        this.table.RowCount__c++;
         let newRow = new Row();
         newRow.rowCount = rowNum;
         for (let i = 0; i < colNum; i++) {
@@ -107,22 +112,20 @@ export class CellComponent implements OnInit {
         }
         this._cellService.insertNewRow(newRow, this.table);
         this.safeBuildRows();
-
     }
 
     public addColumn() {
-        this.table.ColumnCount__c++;
         const colNum = this.table.ColumnCount__c;
         const rowNum = this.table.RowCount__c;
+        this.table.ColumnCount__c++;
         let newCol = new Row();
         for (let i = 0; i < this.rows.length; i++) {
             let newCell = new Cell();
             newCell.ColumnCoord__c = colNum;
             newCell.RowCoord__c = i;
             newCol.row.push(newCell);
-            this.rows[i].row.push(newCell);
         }
-        this._cellService.insertNewRow(newCol, this.table);
+        this._cellService.insertNewColumn(newCol, this.table);
         this.safeBuildRows();
     }
 
@@ -135,36 +138,36 @@ export class CellComponent implements OnInit {
         }
     }
 
-    public getSummCol(cells: Cell[]) {
-        this.sumCol = 0;
+    public getSummCol(rows: Array<Row>) {
         let maxVal = 0;
-        let temp = 0;
+        let temp: number;
         for (let i = 0; i < this.table.ColumnCount__c; i++) {
+            temp = 0;
             for (let j = 0; j < this.table.RowCount__c; j++) {
-                if (cells[j].Value__c) {
-                    temp += cells[i].Value__c;
+                if (rows[j].row[i].Value__c) {
+                    temp += rows[j].row[i].Value__c;
                 }
-            }
-            if (temp > maxVal) {
-                maxVal = temp;
-                this.sumCol = cells[i].ColumnCoord__c;
+                if (temp > maxVal) {
+                    maxVal = temp;
+                    this.sumCol = i;
+                }
             }
         }
     }
 
-    public getSummRow(cells: Cell[]) {
-        this.sumRow = 0;
+    public getSummRow(rows: Array<Row>) {
         let maxVal = 0;
-        let temp = 0;
+        let temp: number;
         for (let i = 0; i < this.table.RowCount__c; i++) {
+            temp = 0;
             for (let j = 0; j < this.table.ColumnCount__c; j++) {
-                if (cells[j].Value__c) {
-                    temp += cells[i].Value__c;
+                if (rows[i].row[j].Value__c) {
+                    temp += rows[i].row[j].Value__c;
                 }
-            }
-            if (temp > maxVal) {
-                maxVal = temp;
-                this.sumRow = cells[i].RowCoord__c;
+                if (temp > maxVal) {
+                    maxVal = temp;
+                    this.sumRow = i;
+                }
             }
         }
     }

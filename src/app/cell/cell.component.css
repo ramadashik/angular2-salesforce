@@ -1,37 +1,32 @@
 table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;  
+  width: 90%;  
 }
+
 
 td, th {
   border: 1px solid #dddddd;
-  height: 20px;
+  height: 40px;
   width: 120px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-input {
-  width: 120px;
-}
-
-.qwer {
+/* .qwer {
   padding: 10px;
   cursor: pointer;
   width: 20px;
-}
-
-.flex {
-  display: flex;
-}
-
+}  */
 .maxCol {
-  background-color: #0f99ee; 
+  background-color: #d9ffdf;
+}
+
+.svg {
+  cursor: pointer;
+  margin: 5px;
 }
 
 .maxRow {
-  background-color: #099247
+  background-color: #ffb75d;
 }
+
+
+
 

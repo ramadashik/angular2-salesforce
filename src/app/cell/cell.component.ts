@@ -64,6 +64,7 @@ export class CellComponent implements OnInit {
         .then((cells) => {
             this._dataService.getTable()
             .then((table) => {
+                this.cells = cells;
                 this.rows = this.buildRows(cells, table);
                 this.getSummRow(this.rows);
                 this.getSumm(cells);
@@ -74,19 +75,19 @@ export class CellComponent implements OnInit {
 
     public toggle(eCell: Cell) {
         this.editCell = eCell;
-        console.log(this.editCell);
     }
 
     // ngOnChanges(changes: SimpleChange) {
 
     // }
     public saveValue(newValue: number, eCell: Cell) {
+        console.log(this.cells);
         for (let i = 0; i < this.cells.length; i++) {
             if (this.cells[i].Id === eCell.Id) {
                 this.cells[i].Value__c = newValue;
                 this._cellService.updateCellBack(this.cells[i]);
+                this.editCell.Id = '';
                 this.safeBuildRows();
-                this.editCell.Id = '0';
             }
         }
 

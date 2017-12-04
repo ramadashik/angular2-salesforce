@@ -39,7 +39,7 @@ export class CellService {
     }
 
     updateCellBack(newCell: Cell): Promise<{}> {
-        console.log('getContact called');
+        console.log('updateCell called');
         return new Promise((resolve, reject) => {
             this.callRemote('JSTaskController.updateCell',
             [newCell.Id, newCell.Value__c], resolve, reject);
